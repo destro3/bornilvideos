@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bornil Academy — Content Calendar</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;600;700;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --cream:#faf6ef;
+  --cream2:#f3ede2;
+  --cream3:#ece4d5;
+  --cream4:#e0d5c2;
+  --bark:#2c1f0e;
+  --bark2:#3d2c14;
+  --bark3:#5a3e20;
+  --sand:#a07850;
+  --sand2:#c49a6c;
+  --orange:#d4621a;
+  --orange2:#e8772a;
+  --orange-dim:rgba(212,98,26,0.12);
+  --orange-glow:rgba(212,98,26,0.22);
+  --amber:#c47c28;
+  --amber-dim:rgba(196,124,40,0.13);
+  --green:#5a8a4a;
+  --green-dim:rgba(90,138,74,0.13);
+  --teal:#3a7a72;
+  --teal-dim:rgba(58,122,114,0.13);
+  --rose:#b85040;
+  --rose-dim:rgba(184,80,64,0.13);
+  --purple:#7a5590;
+  --purple-dim:rgba(122,85,144,0.13);
+  --text:#1e120a;
+  --t2:#5a3e20;
+  --t3:#8a6a44;
+  --t4:#b8926a;
+  --border:rgba(160,120,80,0.18);
+  --border2:rgba(160,120,80,0.32);
+  --r:12px;--r2:8px;--r3:20px;
+}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);min-height:100vh}
+
+/* ── SIDEBAR ── */
+.sidebar{
+  position:fixed;left:0;top:0;bottom:0;width:238px;
+  background:var(--bark);border-right:1px solid rgba(90,62,32,0.4);
+  display:flex;flex-direction:column;z-index:100;overflow-y:auto;
+}
+.sb-logo{padding:22px 18px 16px;border-bottom:1px solid rgba(255,255,255,0.07)}
+.logo-mark{display:flex;align-items:center;gap:10px;font-family:'Fraunces',serif;font-size:16px;font-weight:900;color:var(--cream);letter-spacing:-0.3px}
+.logo-icon{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,var(--orange),var(--amber));display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:0 4px 16px var(--orange-glow)}
+.logo-sub{font-size:10.5px;color:rgba(250,246,239,0.38);margin-top:5px;font-weight:500;letter-spacing:.3px}
+.sb-nav{padding:14px 10px;flex:1}
+.nav-group-label{font-size:9.5px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:rgba(250,246,239,0.28);padding:10px 8px 5px}
+.nav-link{
+  display:flex;align-items:center;gap:9px;padding:9px 10px;border-radius:var(--r2);
+  font-size:12.5px;font-weight:500;color:rgba(250,246,239,0.55);
+  cursor:pointer;transition:all .15s;text-decoration:none;border:none;background:none;width:100%;text-align:left;
+}
+.nav-link:hover{background:rgba(255,255,255,0.06);color:var(--cream)}
+.nav-link.act{background:rgba(212,98,26,0.22);color:var(--orange2)}
+.nav-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.sb-footer{padding:14px;border-top:1px solid rgba(255,255,255,0.07)}
+.prog-row{display:flex;justify-content:space-between;font-size:11px;color:rgba(250,246,239,0.35);margin-bottom:6px}
+.prog-val{color:var(--orange2);font-weight:700}
+.prog-track{height:5px;background:rgba(255,255,255,0.08);border-radius:20px;overflow:hidden}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--orange),var(--amber));border-radius:20px;transition:width .5s ease}
+.sb-save-btn{
+  width:100%;margin-top:10px;padding:10px;
+  background:linear-gradient(135deg,var(--orange),var(--orange2));
+  border:none;border-radius:var(--r2);font-family:inherit;font-size:12px;font-weight:700;
+  color:#fff;cursor:pointer;letter-spacing:.3px;box-shadow:0 4px 16px var(--orange-glow);transition:opacity .15s;
+}
+.sb-save-btn:hover{opacity:.88}
+
+/* ── MAIN ── */
+.main{margin-left:238px;min-height:100vh}
+.topbar{
+  position:sticky;top:0;
+  background:rgba(250,246,239,0.88);backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--border);
+  padding:13px 28px;display:flex;align-items:center;justify-content:space-between;gap:12px;z-index:90;
+}
+.top-title{font-family:'Fraunces',serif;font-size:15px;font-weight:700;color:var(--bark);letter-spacing:-0.2px}
+.top-right{display:flex;align-items:center;gap:8px}
+.tbtn{
+  font-family:inherit;font-size:11.5px;font-weight:600;
+  padding:7px 13px;border-radius:var(--r2);
+  border:1px solid var(--border2);background:var(--cream2);color:var(--t2);cursor:pointer;transition:all .15s;
+}
+.tbtn:hover{background:var(--cream3);color:var(--bark)}
+.tbtn.primary{background:linear-gradient(135deg,var(--orange),var(--orange2));border-color:transparent;color:#fff;box-shadow:0 3px 12px var(--orange-glow)}
+.tbtn.primary:hover{opacity:.88}
+
+.content{padding:28px;max-width:1160px}
+
+/* ── STATS ── */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:28px}
+.sc{
+  background:#fff;border:1px solid var(--border);border-radius:var(--r);
+  padding:16px 18px;position:relative;overflow:hidden;
+}
+.sc::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px}
+.sc.g::after{background:linear-gradient(90deg,var(--green),var(--teal))}
+.sc.o::after{background:linear-gradient(90deg,var(--orange),var(--amber))}
+.sc.r::after{background:linear-gradient(90deg,var(--rose),var(--purple))}
+.sc.t::after{background:linear-gradient(90deg,var(--teal),var(--green))}
+.sc-icon{font-size:20px;margin-bottom:8px}
+.sc-label{font-size:10px;font-weight:700;color:var(--t3);letter-spacing:.6px;text-transform:uppercase;margin-bottom:6px}
+.sc-val{font-family:'Fraunces',serif;font-size:28px;font-weight:900;color:var(--bark);letter-spacing:-1px;line-height:1}
+.sc-sub{font-size:11px;color:var(--t4);margin-top:4px}
+
+/* ── FILTER BAR ── */
+.fbar{display:flex;align-items:center;gap:7px;margin-bottom:26px;flex-wrap:wrap}
+.fbtn{
+  font-family:inherit;font-size:11.5px;font-weight:600;
+  padding:6px 13px;border-radius:var(--r3);
+  border:1px solid var(--border);background:transparent;color:var(--t3);cursor:pointer;transition:all .15s;
+}
+.fbtn:hover{border-color:var(--border2);color:var(--t2)}
+.fbtn.act{background:var(--orange-dim);border-color:rgba(212,98,26,.35);color:var(--orange)}
+.search-wrap{position:relative;margin-left:auto}
+.si{
+  font-family:inherit;font-size:12px;color:var(--text);
+  background:#fff;border:1px solid var(--border);border-radius:var(--r2);
+  padding:7px 12px 7px 30px;outline:none;width:170px;transition:border-color .15s,width .2s;
+}
+.si:focus{border-color:var(--sand2);width:210px}
+.si::placeholder{color:var(--t4)}
+.si-icon{position:absolute;left:9px;top:50%;transform:translateY(-50%);color:var(--t4);font-size:12px;pointer-events:none}
+
+/* ── WEEK ── */
+.week-sec{margin-bottom:38px}
+.week-hdr{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.week-lbl{font-family:'Fraunces',serif;font-size:13px;font-weight:700;color:var(--bark2);letter-spacing:.2px}
+.week-tag{font-size:11px;font-weight:600;padding:3px 11px;border-radius:var(--r3);background:var(--cream3);color:var(--t2);border:1px solid var(--border)}
+.week-line{flex:1;height:1px;background:var(--border)}
+
+/* ── CARD ── */
+.days-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+.day-card{
+  background:#fff;border:1px solid var(--border);border-radius:var(--r);
+  display:flex;flex-direction:column;overflow:hidden;
+  transition:border-color .2s,box-shadow .2s;
+  animation:fadeUp .3s ease both;
+}
+.day-card:hover{border-color:var(--border2);box-shadow:0 6px 28px rgba(160,120,80,.13)}
+.day-card.done{opacity:.38}
+
+/* type left bars */
+.day-card.tv{border-left:3px solid var(--orange)}
+.day-card.tp{border-left:3px solid var(--teal)}
+.day-card.ta{border-left:3px solid var(--amber)}
+.day-card.tl{border-left:3px solid var(--rose)}
+.day-card.ts{border-left:3px solid var(--purple)}
+
+.card-top{padding:13px 14px 10px;border-bottom:1px solid var(--border);display:flex;flex-direction:column;gap:8px}
+.card-head{display:flex;align-items:center;justify-content:space-between}
+.day-num{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--t4)}
+.card-actions{display:flex;align-items:center;gap:7px}
+.badge{font-size:10px;font-weight:700;padding:2px 9px;border-radius:var(--r3);letter-spacing:.2px}
+.bv{background:var(--orange-dim);color:var(--orange)}
+.bt{background:var(--teal-dim);color:var(--teal)}
+.ba{background:var(--amber-dim);color:var(--amber)}
+.bl{background:var(--rose-dim);color:var(--rose)}
+.bs{background:var(--purple-dim);color:var(--purple)}
+.cb{
+  width:17px;height:17px;border-radius:5px;border:1px solid var(--border2);
+  background:transparent;cursor:pointer;appearance:none;-webkit-appearance:none;
+  transition:all .15s;display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.cb:checked{background:var(--green);border-color:var(--green)}
+.cb:checked::after{content:'✓';color:#fff;font-size:10px;font-weight:800;line-height:1}
+.card-title-input{
+  font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;color:var(--bark);
+  background:transparent;border:none;border-bottom:1px dashed var(--border);
+  padding:3px 0;outline:none;width:100%;transition:border-color .15s;
+}
+.card-title-input:focus{border-bottom-color:var(--sand2)}
+.card-title-input::placeholder{color:var(--t4)}
+
+/* content type tags */
+.type-tags{display:flex;gap:5px;flex-wrap:wrap}
+.type-tag{font-size:9.5px;font-weight:600;padding:2px 7px;border-radius:var(--r3);background:var(--cream2);color:var(--t3);border:1px solid var(--border)}
+
+/* ── TABS ── */
+.card-tabs{display:flex;background:var(--cream2);border-bottom:1px solid var(--border)}
+.ctab{
+  font-family:inherit;font-size:11px;font-weight:600;
+  padding:8px 13px;background:transparent;border:none;
+  color:var(--t3);cursor:pointer;transition:all .15s;
+  border-bottom:2px solid transparent;margin-bottom:-1px;
+}
+.ctab:hover{color:var(--t2)}
+.ctab.act{color:var(--orange);border-bottom-color:var(--orange);background:rgba(255,255,255,.6)}
+
+/* ── PANELS ── */
+.card-panel{padding:12px 13px 13px;display:none;flex-direction:column;gap:8px}
+.card-panel.show{display:flex}
+.panel-ta{
+  width:100%;resize:vertical;
+  font-family:'DM Sans',sans-serif;font-size:12px;color:var(--t2);line-height:1.65;
+  background:var(--cream2);border:1px solid var(--border);border-radius:var(--r2);
+  padding:9px 11px;outline:none;transition:border-color .15s;min-height:75px;
+}
+.panel-ta:focus{border-color:var(--sand2);color:var(--bark)}
+.panel-ta::placeholder{color:var(--t4)}
+
+/* ── SCRIPT PANEL ── */
+.script-field{display:flex;flex-direction:column;gap:5px}
+.sfield-lbl{font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;display:flex;align-items:center;gap:6px}
+.lbl-hook{color:var(--orange)}
+.lbl-body{color:var(--teal)}
+.lbl-cta{color:var(--green)}
+.field-pill{font-size:9px;font-weight:700;padding:1px 7px;border-radius:var(--r3)}
+.ph2{background:var(--orange-dim);color:var(--orange)}
+.pb2{background:var(--teal-dim);color:var(--teal)}
+.pc2{background:var(--green-dim);color:var(--green)}
+.script-ta{
+  width:100%;resize:vertical;
+  font-family:'DM Sans',sans-serif;font-size:12px;color:var(--t2);line-height:1.65;
+  background:var(--cream2);border:1px solid var(--border);border-radius:var(--r2);
+  padding:8px 11px;outline:none;transition:border-color .15s;
+}
+.script-ta.hook-ta{min-height:55px;border-left:3px solid var(--orange)}
+.script-ta.body-ta{min-height:80px;border-left:3px solid var(--teal)}
+.script-ta.cta-ta{min-height:50px;border-left:3px solid var(--green)}
+.script-ta:focus{border-color:var(--sand2);color:var(--bark)}
+.script-ta::placeholder{color:var(--t4)}
+.wc{font-size:10px;color:var(--t4);text-align:right}
+.wc span{color:var(--orange);font-weight:700}
+.tele-btn{
+  font-family:inherit;font-size:11px;font-weight:700;
+  padding:7px 14px;border-radius:var(--r2);
+  border:1.5px solid var(--orange);background:var(--orange-dim);color:var(--orange);
+  cursor:pointer;transition:all .15s;display:flex;align-items:center;gap:5px;align-self:flex-start;
+}
+.tele-btn:hover{background:var(--orange);color:#fff}
+
+/* ── TELEPROMPTER ── */
+.tele-modal{
+  display:none;position:fixed;inset:0;z-index:300;
+  background:var(--bark);flex-direction:column;align-items:center;justify-content:center;
+}
+.tele-modal.open{display:flex}
+.tele-box{width:100%;max-width:740px;height:100%;display:flex;flex-direction:column;padding:36px 56px}
+.tele-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px}
+.tele-day-lbl{font-family:'Fraunces',serif;font-size:14px;font-weight:700;color:rgba(250,246,239,.55);letter-spacing:.2px}
+.tele-controls{display:flex;align-items:center;gap:12px}
+.speed-lbl{font-size:11px;color:rgba(250,246,239,.4)}
+.speed-range{accent-color:var(--orange);cursor:pointer;width:90px}
+.tele-close{
+  font-family:inherit;font-size:11.5px;font-weight:700;
+  padding:7px 14px;border-radius:var(--r2);
+  border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.06);color:rgba(250,246,239,.7);
+  cursor:pointer;transition:all .15s;
+}
+.tele-close:hover{background:rgba(255,255,255,.1);color:var(--cream)}
+.tele-scroll-area{flex:1;overflow:hidden;position:relative}
+.tele-grad-t,.tele-grad-b{position:absolute;left:0;right:0;height:130px;pointer-events:none;z-index:2}
+.tele-grad-t{top:0;background:linear-gradient(to bottom,var(--bark),transparent)}
+.tele-grad-b{bottom:0;background:linear-gradient(to top,var(--bark),transparent)}
+.tele-text{
+  font-family:'Fraunces',serif;
+  font-size:clamp(22px,3.5vw,34px);
+  font-weight:600;line-height:1.85;
+  color:var(--cream);white-space:pre-wrap;
+}
+.tele-mirror{transform:scaleX(-1)} /* mirror mode */
+.tele-footer{display:flex;align-items:center;justify-content:center;gap:12px;margin-top:26px;flex-wrap:wrap}
+.tele-play{
+  font-family:inherit;font-size:13px;font-weight:700;
+  padding:12px 36px;border-radius:var(--r);
+  border:none;background:linear-gradient(135deg,var(--orange),var(--orange2));
+  color:#fff;cursor:pointer;box-shadow:0 4px 20px var(--orange-glow);letter-spacing:.3px;
+}
+.tele-mirror-btn{
+  font-family:inherit;font-size:11.5px;font-weight:600;
+  padding:10px 18px;border-radius:var(--r);
+  border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);color:rgba(250,246,239,.6);
+  cursor:pointer;transition:all .15s;
+}
+.tele-mirror-btn:hover{background:rgba(255,255,255,.1);color:var(--cream)}
+.tele-font-row{display:flex;align-items:center;gap:8px;color:rgba(250,246,239,.4);font-size:11px}
+.font-btn{
+  width:26px;height:26px;border-radius:6px;border:1px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,.06);color:rgba(250,246,239,.7);cursor:pointer;
+  font-family:inherit;font-size:13px;font-weight:700;transition:all .15s;
+}
+.font-btn:hover{background:rgba(255,255,255,.12)}
+
+/* ── TOAST ── */
+.toast{
+  position:fixed;bottom:22px;right:22px;
+  background:var(--bark);color:var(--cream);
+  font-size:12.5px;font-weight:700;
+  padding:11px 18px;border-radius:var(--r2);z-index:999;
+  border:1px solid var(--border2);
+  transform:translateY(70px);opacity:0;transition:all .3s ease;
+  box-shadow:0 4px 20px rgba(44,31,14,.25);
+}
+.toast.show{transform:translateY(0);opacity:1}
+
+/* ── MISC ── */
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--cream4);border-radius:3px}
+.hidden{display:none!important}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.day-card:nth-child(1){animation-delay:.02s}.day-card:nth-child(2){animation-delay:.04s}
+.day-card:nth-child(3){animation-delay:.06s}.day-card:nth-child(4){animation-delay:.08s}
+.day-card:nth-child(5){animation-delay:.10s}.day-card:nth-child(6){animation-delay:.12s}
+.day-card:nth-child(7){animation-delay:.14s}
+@media(max-width:680px){.sidebar{display:none}.main{margin-left:0}.stats{grid-template-columns:repeat(2,1fr)}.content{padding:16px}}
+</style>
+</head>
+<body>
+
+<aside class="sidebar">
+  <div class="sb-logo">
+    <div class="logo-mark"><div class="logo-icon">🎬</div>Bornil Academy</div>
+    <div class="logo-sub">30-Day Content Calendar</div>
+  </div>
+  <nav class="sb-nav">
+    <div class="nav-group-label">Weeks</div>
+    <a class="nav-link" href="#week1">📅 Week 1 — Foundation</a>
+    <a class="nav-link" href="#week2">📅 Week 2 — Trust</a>
+    <a class="nav-link" href="#week3">📅 Week 3 — Conversion</a>
+    <a class="nav-link" href="#week4">📅 Week 4 — Scaling</a>
+    <a class="nav-link" href="#final">⚡ Final 2 Days</a>
+    <div class="nav-group-label" style="margin-top:12px">Content Types</div>
+    <div style="padding:4px 8px;display:flex;flex-direction:column;gap:7px">
+      <div style="display:flex;align-items:center;gap:8px;font-size:11.5px;color:rgba(250,246,239,.5)"><div class="nav-dot" style="background:var(--orange)"></div>Video Day</div>
+      <div style="display:flex;align-items:center;gap:8px;font-size:11.5px;color:rgba(250,246,239,.5)"><div class="nav-dot" style="background:var(--teal)"></div>Planning</div>
+      <div style="display:flex;align-items:center;gap:8px;font-size:11.5px;color:rgba(250,246,239,.5)"><div class="nav-dot" style="background:var(--amber)"></div>Analysis</div>
+      <div style="display:flex;align-items:center;gap:8px;font-size:11.5px;color:rgba(250,246,239,.5)"><div class="nav-dot" style="background:var(--rose)"></div>Light</div>
+      <div style="display:flex;align-items:center;gap:8px;font-size:11.5px;color:rgba(250,246,239,.5)"><div class="nav-dot" style="background:var(--purple)"></div>Special</div>
+    </div>
+    <div class="nav-group-label" style="margin-top:12px">Content Pillars</div>
+    <div style="padding:4px 8px;display:flex;flex-direction:column;gap:6px">
+      <div style="font-size:11px;color:rgba(250,246,239,.45)">🗣️ Spoken English Tips</div>
+      <div style="font-size:11px;color:rgba(250,246,239,.45)">🌟 Student Transformations</div>
+      <div style="font-size:11px;color:rgba(250,246,239,.45)">📖 Grammar Lessons</div>
+      <div style="font-size:11px;color:rgba(250,246,239,.45)">💪 Motivation / Mindset</div>
+      <div style="font-size:11px;color:rgba(250,246,239,.45)">🧒 Kids English</div>
+    </div>
+  </nav>
+  <div class="sb-footer">
+    <div class="prog-row"><span>Progress</span><span class="prog-val" id="sb-lbl">0 / 30</span></div>
+    <div class="prog-track"><div class="prog-fill" id="sb-fill" style="width:0%"></div></div>
+    <button class="sb-save-btn" onclick="saveAll()">💾 Save Everything</button>
+  </div>
+</aside>
+
+<main class="main">
+  <div class="topbar">
+    <div class="top-title">🌿 Bornil Academy — Content Calendar</div>
+    <div class="top-right">
+      <button class="tbtn" onclick="exportTXT()">Export .txt</button>
+      <button class="tbtn" onclick="clearAll()">Reset</button>
+      <button class="tbtn primary" onclick="saveAll()">Save All</button>
+    </div>
+  </div>
+  <div class="content">
+    <div class="stats">
+      <div class="sc g"><div class="sc-icon">✅</div><div class="sc-label">Completed</div><div class="sc-val" id="s-done">0</div><div class="sc-sub">days done</div></div>
+      <div class="sc o"><div class="sc-icon">⏳</div><div class="sc-label">Remaining</div><div class="sc-val" id="s-rem">30</div><div class="sc-sub">days to go</div></div>
+      <div class="sc r"><div class="sc-icon">🎤</div><div class="sc-label">Scripts Written</div><div class="sc-val" id="s-scripts">0</div><div class="sc-sub">ready to film</div></div>
+      <div class="sc t"><div class="sc-icon">📈</div><div class="sc-label">Progress</div><div class="sc-val" id="s-pct">0%</div><div class="sc-sub">of calendar</div></div>
+    </div>
+    <div class="fbar">
+      <button class="fbtn act" onclick="filterDays('all',this)">All</button>
+      <button class="fbtn" onclick="filterDays('video',this)">📹 Videos</button>
+      <button class="fbtn" onclick="filterDays('plan',this)">📋 Planning</button>
+      <button class="fbtn" onclick="filterDays('analysis',this)">📊 Analysis</button>
+      <button class="fbtn" onclick="filterDays('light',this)">💡 Light</button>
+      <button class="fbtn" onclick="filterDays('pending',this)">⏳ Pending</button>
+      <div class="search-wrap">
+        <span class="si-icon">🔍</span>
+        <input class="si" type="text" placeholder="Search days…" oninput="searchDays(this.value)">
+      </div>
+    </div>
+    <div id="cal-body"></div>
+  </div>
+</main>
+
+<!-- TELEPROMPTER -->
+<div class="tele-modal" id="tele-modal">
+  <div class="tele-box">
+    <div class="tele-header">
+      <div class="tele-day-lbl" id="tele-lbl">Day — Script</div>
+      <div class="tele-controls">
+        <span class="speed-lbl">Speed</span>
+        <input class="speed-range" type="range" min="1" max="12" value="4" id="speed-range">
+        <button class="tele-close" onclick="closeTele()">✕ Close</button>
+      </div>
+    </div>
+    <div class="tele-scroll-area" id="tele-scroll">
+      <div class="tele-grad-t"></div>
+      <div class="tele-text" id="tele-text"></div>
+      <div class="tele-grad-b"></div>
+    </div>
+    <div class="tele-footer">
+      <div class="tele-font-row">
+        <button class="font-btn" onclick="changeFontSize(-2)">A−</button>
+        <span id="font-sz-lbl">32px</span>
+        <button class="font-btn" onclick="changeFontSize(2)">A+</button>
+      </div>
+      <button class="tele-play" id="tele-play-btn" onclick="toggleTele()">▶ Start Reading</button>
+      <button class="tele-mirror-btn" onclick="toggleMirror()">🪞 Mirror</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// Content pillar tags per content type
+const PILLARS={
+  spoken:'🗣️ Spoken',transform:'🌟 Transformation',grammar:'📖 Grammar',
+  motivation:'💪 Motivation',kids:'🧒 Kids'
+};
+
+const WEEKS=[
+  {id:'week1',label:'Week 1',focus:'Foundation + Awareness',days:[
+    {day:1,type:'plan',tc:'tp',badge:'Planning',bc:'bt',title:'Define Strategy & Hooks',dn:'Audience: school/college students, job seekers, parents (Kids English).\nResearch "spoken English problems Bangladesh".\nList 6 strong hooks for each pillar.'},
+    {day:2,type:'video',tc:'tv',badge:'Video',bc:'bv',title:'Pain hook — "You understand English… but can\'t speak? Here\'s why."',dn:'',pillars:['spoken'],sh:'তুমি English বুঝো — কিন্তু বলতে পারো না। এটা কেন হয়?',sb:'The real reason: you\'ve been READING English, not SPEAKING it.\n\nMost students in Bangladesh learn grammar perfectly — but freeze when they open their mouths.\n\nThe brain needs SPEAKING practice, not just reading.\n\nAt Bornil Academy, we fix exactly this.',sc:'Comment "SPEAK" below if this is you. And follow for daily tips — or join Bornil Academy today!'},
+    {day:3,type:'video',tc:'tv',badge:'Video',bc:'bv',title:'3 daily habits to improve English fast',dn:'',pillars:['spoken','motivation']},
+    {day:4,type:'video',tc:'tv',badge:'Video',bc:'bv',title:'Stop learning English like this… (common mistake)',dn:'',pillars:['grammar','spoken']},
+    {day:5,type:'video',tc:'tv',badge:'Video',bc:'bv',title:'Bad English vs Natural English — the big difference',dn:'',pillars:['spoken']},
+    {day:6,type:'analysis',tc:'ta',badge:'Analysis',bc:'ba',title:'Week 1 Performance Review',dn:'Check: watch time, comments, saves, shares.\nNote best hook. Replicate next week.'},
+    {day:7,type:'light',tc:'tl',badge:'Light',bc:'bl',title:'Day inside a Bornil Academy class',dn:'',pillars:['transform']},
+  ]},
+  {id:'week2',label:'Week 2',focus:'Trust + Engagement',days:[
+    {day:8,type:'plan',tc:'tp',badge:'Planning',bc:'bt',title:'Week 2 Planning',dn:'Review best video. Double down on top hook format.'},
+    {day:9,type:'video',tc:'tv',badge:'Video',bc:'bv',title:'"Why students feel shy speaking English…"',dn:'',pillars:['motivation','spoken']},
+    {day:10,type:'video',tc:'tv',badge:'Video',bc:'bv',title:'Transformation — "From broken English to confident speaking"',dn:'',pillars:['transform']},
+    {day:11,type:'video',tc:'tv',badge:'Video',bc:'bv',title:'Mini lesson — "Stop saying \'very good\' — say this instead"',dn:'',pillars:['grammar']},
+    {day:12,type:'video',tc:'tv',badge:'Video',bc:'bv',title:'Kids English — "Fun way to teach your child 5 words today"',dn:'',pillars:['kids']},
+    {day:13,type:'analysis',tc:'ta',badge:'Analysis',bc:'ba',title:'Week 2 Review',dn:''},
+    {day:14,type:'light',tc:'tl',badge:'Light',bc:'bl',title:'Student reaction / fun classroom moment',dn:'',pillars:['transform']},
+  ]},
+  {id:'week3',label:'Week 3',focus:'Conversion — ভর্তি Focus',days:[
+    {day:15,type:'plan',tc:'tp',badge:'Planning',bc:'bt',title:'Week 3 — Enrollment Push Planning',dn:'Focus all CTAs on ভর্তি (enrollment). Use social proof.'},
+    {day:16,type:'video',tc:'tv',badge:'Video',bc:'bv',title:'"If you want to speak English in 30 days…"',dn:'',pillars:['spoken','motivation']},
+    {day:17,type:'video',tc:'tv',badge:'Video',bc:'bv',title:'"You study grammar but still can\'t speak?"',dn:'',pillars:['grammar','spoken']},
+    {day:18,type:'video',tc:'tv',badge:'Video',bc:'bv',title:'Student proof — "Our students after 1 month at Bornil"',dn:'',pillars:['transform']},
+    {day:19,type:'video',tc:'tv',badge:'Video',bc:'bv',title:'Kids English — "Is your child scared of English? Watch this."',dn:'',pillars:['kids','motivation']},
+    {day:20,type:'analysis',tc:'ta',badge:'Analysis',bc:'ba',title:'Week 3 Review',dn:''},
+    {day:21,type:'light',tc:'tl',badge:'Light',bc:'bl',title:'Classroom clips / speaking practice reel',dn:''},
+  ]},
+  {id:'week4',label:'Week 4',focus:'Scaling + Viral Push',days:[
+    {day:22,type:'plan',tc:'tp',badge:'Planning',bc:'bt',title:'Week 4 — Double Down',dn:'2× output. Recreate top video with new hook.'},
+    {day:23,type:'video',tc:'tv',badge:'Video',bc:'bv',title:'"This is why you still can\'t speak English…"',dn:'',pillars:['spoken']},
+    {day:24,type:'video',tc:'tv',badge:'Video',bc:'bv',title:'Grammar myth — "You don\'t need perfect grammar to speak well"',dn:'',pillars:['grammar','motivation']},
+    {day:25,type:'video',tc:'tv',badge:'Video',bc:'bv',title:'Challenge — "Try this 60-second English speaking challenge"',dn:'',pillars:['spoken']},
+    {day:26,type:'video',tc:'tv',badge:'Video',bc:'bv',title:'Strong CTA — "Why Bornil Academy. Join before seats are full."',dn:'',pillars:['transform']},
+    {day:27,type:'analysis',tc:'ta',badge:'Analysis',bc:'ba',title:'Final Analytics Review',dn:''},
+    {day:28,type:'light',tc:'tl',badge:'Light',bc:'bl',title:'Behind the scenes at Bornil Academy',dn:''},
+  ]},
+  {id:'final',label:'Final 2 Days',focus:'Optimization',days:[
+    {day:29,type:'special',tc:'ts',badge:'Special',bc:'bs',title:'Recreate BEST video with a better hook',dn:'',pillars:['spoken']},
+    {day:30,type:'special',tc:'ts',badge:'Special',bc:'bs',title:'Compilation — "Best English tips in 30 seconds"',dn:'',pillars:['spoken','grammar','motivation']},
+  ]},
+];
+
+let doneSet=new Set(),saved={};
+try{const d=localStorage.getItem('ba3_done');if(d)doneSet=new Set(JSON.parse(d))}catch(e){}
+try{const n=localStorage.getItem('ba3_data');if(n)saved=JSON.parse(n)}catch(e){}
+function g(k,fb){return saved[k]!==undefined?saved[k]:fb}
+
+function pillarsHTML(arr){
+  if(!arr||!arr.length)return'';
+  return'<div class="type-tags">'+arr.map(p=>`<span class="type-tag">${PILLARS[p]||p}</span>`).join('')+'</div>';
+}
+
+function buildCal(){
+  const body=document.getElementById('cal-body');
+  body.innerHTML='';
+  WEEKS.forEach(week=>{
+    const sec=document.createElement('div');
+    sec.className='week-sec';sec.id=week.id;
+    sec.innerHTML=`<div class="week-hdr"><div class="week-lbl">${week.label}</div><div class="week-tag">${week.focus}</div><div class="week-line"></div></div>`;
+    const grid=document.createElement('div');grid.className='days-grid';
+    week.days.forEach(d=>{
+      const card=document.createElement('div');
+      card.className=`day-card ${d.tc}`;card.dataset.day=d.day;card.dataset.type=d.type;
+      if(doneSet.has(d.day))card.classList.add('done');
+      const title=g('t_'+d.day,d.title);
+      const notes=g('no_'+d.day,d.dn||'');
+      const hook=g('h_'+d.day,d.sh||'');
+      const body_=g('b_'+d.day,d.sb||'');
+      const cta=g('c_'+d.day,d.sc||'');
+      const hasScript=hook.trim()||body_.trim()||cta.trim();
+      card.innerHTML=`
+        <div class="card-top">
+          <div class="card-head">
+            <div class="day-num">Day ${d.day}</div>
+            <div class="card-actions">
+              <span class="badge ${d.bc}">${d.badge}</span>
+              <input type="checkbox" class="cb" ${doneSet.has(d.day)?'checked':''} onchange="toggleDone(${d.day},this)">
+            </div>
+          </div>
+          <input class="card-title-input" type="text" value="${esc(title)}" placeholder="Title for this day…" oninput="af('t_${d.day}',this.value)">
+          ${pillarsHTML(d.pillars)}
+        </div>
+        <div class="card-tabs">
+          <button class="ctab act" onclick="switchTab(this,'notes',${d.day})">📝 Notes</button>
+          <button class="ctab" onclick="switchTab(this,'script',${d.day})">🎤 Script${hasScript?' ✦':''}</button>
+        </div>
+        <div class="card-panel show" id="pn-${d.day}">
+          <textarea class="panel-ta" placeholder="Notes, ideas, references, links…" oninput="af('no_${d.day}',this.value)">${esc(notes)}</textarea>
+        </div>
+        <div class="card-panel" id="ps-${d.day}">
+          <div class="script-field">
+            <div class="sfield-lbl lbl-hook">🪝 Hook <span class="field-pill ph2">Opening 3–5 sec</span></div>
+            <textarea class="script-ta hook-ta" placeholder="Your attention-grabbing opening line…" oninput="af('h_${d.day}',this.value);updateWC(${d.day})">${esc(hook)}</textarea>
+          </div>
+          <div class="script-field">
+            <div class="sfield-lbl lbl-body">📖 Body <span class="field-pill pb2">Main content</span></div>
+            <textarea class="script-ta body-ta" placeholder="The main teaching / story / value…" oninput="af('b_${d.day}',this.value);updateWC(${d.day})">${esc(body_)}</textarea>
+          </div>
+          <div class="script-field">
+            <div class="sfield-lbl lbl-cta">📣 CTA <span class="field-pill pc2">Call to action</span></div>
+            <textarea class="script-ta cta-ta" placeholder="Follow, comment, enroll at Bornil Academy…" oninput="af('c_${d.day}',this.value);updateWC(${d.day})">${esc(cta)}</textarea>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px">
+            <button class="tele-btn" onclick="openTele(${d.day})">📺 Open Teleprompter</button>
+            <div class="wc" id="wc-${d.day}">Words: <span>0</span></div>
+          </div>
+        </div>
+      `;
+      grid.appendChild(card);
+      setTimeout(()=>updateWC(d.day),0);
+    });
+    sec.appendChild(grid);body.appendChild(sec);
+  });
+  updateStats();
+}
+
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+
+function switchTab(btn,tab,day){
+  const card=document.querySelector(`.day-card[data-day="${day}"]`);
+  card.querySelectorAll('.ctab').forEach(b=>b.classList.remove('act'));
+  card.querySelectorAll('.card-panel').forEach(p=>p.classList.remove('show'));
+  btn.classList.add('act');
+  document.getElementById('p'+tab[0]+'-'+day).classList.add('show');
+}
+
+function toggleDone(day,el){
+  if(el.checked)doneSet.add(day);else doneSet.delete(day);
+  document.querySelector(`.day-card[data-day="${day}"]`).classList.toggle('done',el.checked);
+  try{localStorage.setItem('ba3_done',JSON.stringify([...doneSet]))}catch(e){}
+  updateStats();
+}
+
+function af(key,val){saved[key]=val;try{localStorage.setItem('ba3_data',JSON.stringify(saved))}catch(e){}}
+
+function updateWC(day){
+  const el=document.getElementById('wc-'+day);if(!el)return;
+  const h=saved['h_'+day]||'',b=saved['b_'+day]||'',c=saved['c_'+day]||'';
+  const total=(h+' '+b+' '+c).trim().split(/\s+/).filter(w=>w).length;
+  el.querySelector('span').textContent=total;
+}
+
+function saveAll(){
+  document.querySelectorAll('.day-card').forEach(card=>{
+    const day=card.dataset.day;
+    const ti=card.querySelector('.card-title-input');
+    const tn=document.getElementById('pn-'+day)?.querySelector('.panel-ta');
+    const th=card.querySelector('.hook-ta');
+    const tb=card.querySelector('.body-ta');
+    const tc=card.querySelector('.cta-ta');
+    if(ti)saved['t_'+day]=ti.value;
+    if(tn)saved['no_'+day]=tn.value;
+    if(th)saved['h_'+day]=th.value;
+    if(tb)saved['b_'+day]=tb.value;
+    if(tc)saved['c_'+day]=tc.value;
+  });
+  try{localStorage.setItem('ba3_data',JSON.stringify(saved));localStorage.setItem('ba3_done',JSON.stringify([...doneSet]))}catch(e){}
+  showToast('✓ Saved!');
+}
+
+function clearAll(){
+  if(!confirm('Clear all notes and scripts?'))return;
+  saved={};try{localStorage.removeItem('ba3_data')}catch(e){}
+  buildCal();showToast('Cleared.');
+}
+
+function updateStats(){
+  const done=doneSet.size;
+  document.getElementById('s-done').textContent=done;
+  document.getElementById('s-rem').textContent=30-done;
+  document.getElementById('s-pct').textContent=Math.round(done/30*100)+'%';
+  document.getElementById('sb-lbl').textContent=done+' / 30';
+  document.getElementById('sb-fill').style.width=Math.round(done/30*100)+'%';
+  let sc=0;
+  for(let i=1;i<=30;i++){if((saved['h_'+i]||'').trim()||(saved['b_'+i]||'').trim()||(saved['c_'+i]||'').trim())sc++;}
+  document.getElementById('s-scripts').textContent=sc;
+}
+
+function filterDays(type,btn){
+  document.querySelectorAll('.fbtn').forEach(b=>b.classList.remove('act'));btn.classList.add('act');
+  document.querySelectorAll('.day-card').forEach(card=>{
+    if(type==='all'){card.classList.remove('hidden');return}
+    if(type==='pending'){card.classList.toggle('hidden',doneSet.has(parseInt(card.dataset.day)));return}
+    card.classList.toggle('hidden',card.dataset.type!==type);
+  });
+  document.querySelectorAll('.week-sec').forEach(ws=>{ws.style.display=ws.querySelectorAll('.day-card:not(.hidden)').length===0?'none':''});
+}
+
+function searchDays(q){
+  const t=q.toLowerCase().trim();
+  document.querySelectorAll('.day-card').forEach(card=>{
+    if(!t){card.classList.remove('hidden');return}
+    const vals=[
+      card.querySelector('.card-title-input')?.value||'',
+      card.querySelector('.panel-ta')?.value||'',
+      card.querySelector('.hook-ta')?.value||'',
+      card.querySelector('.body-ta')?.value||'',
+      card.querySelector('.cta-ta')?.value||'',
+    ].map(s=>s.toLowerCase());
+    card.classList.toggle('hidden',!vals.some(s=>s.includes(t)));
+  });
+  document.querySelectorAll('.week-sec').forEach(ws=>{ws.style.display=ws.querySelectorAll('.day-card:not(.hidden)').length===0?'none':''});
+}
+
+// ── TELEPROMPTER ──
+let teleRunning=false,teleTimer=null,teleFontSize=32,mirrorOn=false;
+
+function openTele(day){
+  const h=saved['h_'+day]||'',b=saved['b_'+day]||'',c=saved['c_'+day]||'';
+  const full=[h&&'🪝  '+h,b&&b,c&&'👉  '+c].filter(Boolean).join('\n\n');
+  if(!full.trim()){showToast('Write your script first!');return}
+  document.getElementById('tele-lbl').textContent='Day '+day;
+  document.getElementById('tele-text').textContent=full;
+  document.getElementById('tele-text').style.fontSize=teleFontSize+'px';
+  document.getElementById('font-sz-lbl').textContent=teleFontSize+'px';
+  document.getElementById('tele-scroll').scrollTop=0;
+  teleRunning=false;
+  document.getElementById('tele-play-btn').textContent='▶ Start Reading';
+  document.getElementById('tele-modal').classList.add('open');
+}
+
+function closeTele(){clearInterval(teleTimer);teleRunning=false;document.getElementById('tele-modal').classList.remove('open')}
+
+function toggleTele(){
+  teleRunning=!teleRunning;
+  document.getElementById('tele-play-btn').textContent=teleRunning?'⏸ Pause':'▶ Start Reading';
+  if(teleRunning){
+    const scroll=document.getElementById('tele-scroll');
+    teleTimer=setInterval(()=>{
+      const spd=parseInt(document.getElementById('speed-range').value);
+      scroll.scrollTop+=spd*0.45;
+      if(scroll.scrollTop+scroll.clientHeight>=scroll.scrollHeight){
+        clearInterval(teleTimer);teleRunning=false;
+        document.getElementById('tele-play-btn').textContent='▶ Start Reading';
+        scroll.scrollTop=0;
+      }
+    },40);
+  }else{clearInterval(teleTimer)}
+}
+
+function changeFontSize(delta){
+  teleFontSize=Math.max(16,Math.min(60,teleFontSize+delta));
+  document.getElementById('tele-text').style.fontSize=teleFontSize+'px';
+  document.getElementById('font-sz-lbl').textContent=teleFontSize+'px';
+}
+
+function toggleMirror(){
+  mirrorOn=!mirrorOn;
+  document.getElementById('tele-text').classList.toggle('tele-mirror',mirrorOn);
+}
+
+document.getElementById('tele-modal').addEventListener('click',function(e){if(e.target===this)closeTele()});
+
+function showToast(msg){
+  const t=document.getElementById('toast');t.textContent=msg;
+  t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2400);
+}
+
+function exportTXT(){
+  let out='BORNIL ACADEMY — 30-DAY CONTENT CALENDAR\n'+'='.repeat(44)+'\n\n';
+  WEEKS.forEach(w=>{
+    out+=`=== ${w.label.toUpperCase()} — ${w.focus} ===\n\n`;
+    w.days.forEach(d=>{
+      const t=saved['t_'+d.day]!==undefined?saved['t_'+d.day]:d.title;
+      const n=saved['no_'+d.day]||d.dn||'';
+      const h=saved['h_'+d.day]||d.sh||'';
+      const b=saved['b_'+d.day]||d.sb||'';
+      const c=saved['c_'+d.day]||d.sc||'';
+      out+=`DAY ${d.day} [${d.badge}] ${doneSet.has(d.day)?'[DONE]':'[PENDING]'}\n${t}\n`;
+      if(n.trim())out+='\nNOTES:\n'+n.trim()+'\n';
+      if(h||b||c){out+='\nSCRIPT:\n';if(h)out+='HOOK: '+h+'\n';if(b)out+='BODY:\n'+b+'\n';if(c)out+='CTA: '+c+'\n';}
+      out+='\n';
+    });
+  });
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob([out],{type:'text/plain'}));
+  a.download='bornil-academy-calendar.txt';a.click();
+}
+
+let autoSave;
+document.addEventListener('input',()=>{clearTimeout(autoSave);autoSave=setTimeout(saveAll,1800)});
+buildCal();
+</script>
+</body>
+</html>
